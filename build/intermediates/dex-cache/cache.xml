@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-53f6a1d080281ca1091a3aaccf3cad214f5e47e3.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/DeadReckoning-master/zBarScannerLibrary/unspecified/libs/zbar.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7bbdf7ba57a8a157c0cad51e455609c70887812e">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/zbar-7a9a6cbcd6ddbd9bf2b3401a6c4c79d247a220b9.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/DeadReckoning-master/zBarScannerLibrary/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7a2442910a31052812e3ac2a5c6c6440879518e2">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-72bdaefc5e6d7ca52f9ce29ba05d0078fd0f0c43.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-0bc18a9ecb3a873bd62f87f9068acf085fddcb19.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-1a293c834849efd96b4cc45fb86d98cce0c90cb5.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/src/libs/achartengine-1.1.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9932e3fb9fbe54e80873e77f72a99f79e33b3250">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/achartengine-1.1.0-413f5415a4eeee32c8c0fdcc1607dc481c8537aa.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/src/libs/EJML-core-0.26.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4d7c1d7b16b80875d7fba8d72b2e24eece176124">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/EJML-core-0.26-70f28e6a0fc30c09c4c3ed419f6eca85fcd3f551.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-555ebffff7a8d278f3211ed6854b87cf940441e4.jar" />
+    </item>
+
+</items>
