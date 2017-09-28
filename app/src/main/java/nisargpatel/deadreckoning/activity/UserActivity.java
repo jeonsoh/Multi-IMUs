@@ -26,7 +26,7 @@ public class UserActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-
+        //github test
         Intent myIntent = getIntent();
         String strideLength = myIntent.getStringExtra("stride_length");
         userName = myIntent.getStringExtra("user_name");
