@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="nisargpatel.deadreckoning">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
+        <activity
+            android:name="nisargpatel.deadreckoning.activity.StepCountActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_step_counter"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Material" >
+        </activity>
+        <activity
+            android:name=".activity.StepCalibrationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_calibration"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Material" >
+        </activity>
+        <activity
+            android:name="nisargpatel.deadreckoning.activity.GraphActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_graph"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Material" >
+        </activity>
+        <activity
+            android:name="nisargpatel.deadreckoning.activity.HeadingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Material" >
+        </activity>
+        <activity
+            android:name="nisargpatel.deadreckoning.activity.DataCollectActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_data_collection"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Material" >
+        </activity>
+        <activity
+            android:name="nisargpatel.deadreckoning.activity.UserActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_user"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Material" >
+        </activity>
+        <activity
+            android:name="nisargpatel.deadreckoning.activity.QRCodeActivity"
+            android:label="@string/title_activity_qr_code_scanner" >
+        </activity>
+        <activity
+            android:name="nisargpatel.deadreckoning.activity.UserListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Material.Light.DarkActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="nisargpatel.deadreckoning.activity.DebugToolsActivity"
+            android:label="@string/title_activity_debug_tools" >
+        </activity>
+    </application>
+
+</manifest>
