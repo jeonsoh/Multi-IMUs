@@ -32,6 +32,7 @@
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/google-services/debug" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/debug" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/res/generated/debug" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/debug" isTestSource="true" generated="true" />
@@ -94,12 +95,30 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="mockable-android-21" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
+    <orderEntry type="library" exported="" name="play-services-auth-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="firebase-database-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="firebase-core-11.0.4" level="project" />
     <orderEntry type="library" exported="" name="achartengine-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="EJML-core-0.26" level="project" />
+    <orderEntry type="library" exported="" name="firebase-database-connection-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="firebase-iid-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
+    <orderEntry type="library" exported="" name="play-services-auth-base-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="support-compat-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="firebase-auth-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="firebase-analytics-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="firebase-analytics-impl-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="support-media-compat-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="support-core-ui-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-basement-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="play-services-tasks-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="play-services-base-11.0.4" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="support-core-utils-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="support-fragment-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="firebase-common-11.0.4" level="project" />
     <orderEntry type="module" module-name="zBarScannerLibrary" exported="" />
     <orderEntry type="library" exported="" name="zbar" level="project" />
   </component>

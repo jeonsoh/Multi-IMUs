@@ -2,11 +2,18 @@
 <items version="2" >
 
     <item
-        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/11.0.4/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-53f6a1d080281ca1091a3aaccf3cad214f5e47e3.jar" />
+        sha1="e1625e48a836779b5fa141d22e5d05563aaccc9a">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-a8483996332a4632af947cbb322f9a2949c0571e.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-1252e4d0e5db0d3de8c1543317b5173be283750a.jar" />
     </item>
     <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/DeadReckoning-master/zBarScannerLibrary/unspecified/libs/zbar.jar"
@@ -16,6 +23,62 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/zbar-7a9a6cbcd6ddbd9bf2b3401a6c4c79d247a220b9.jar" />
     </item>
     <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-2173316ce0591754faed0581790cc839f225382c.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="43e9789bd3240271265ab30ce1be9f224843f5a8">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-a87917a697ad32e0132ff5ece57af2facdd2ad3b.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2430e711762a749feb00b3d64858ca4768251b9d">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-5e638a453490c90ee1f31390190af80e0d426ca5.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-01d7ea7f2081ae8f53a3d9424906f6f2a493b117.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0bffdc0bd4f7ca0e27c5bfeef39569f8da00aa26">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-c41ab05078cfc6fd5ed954e49dbebdd7f60e4ba9.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ed87ccdcb70c17d71ba4e6e4ac16afa62d3c49fb">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-069c8c1cd361ae76f1dfcbd16c71ef64dcc9d873.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7c24e2e9773fb498e390ce973db382c3ddcf748e">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-c534a4ac98da336605ea8526801b26ab3baa4abc.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-55a8183ae0e16fdd2d3f82cf8f2274decba4d3ed.jar" />
+    </item>
+    <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/DeadReckoning-master/zBarScannerLibrary/unspecified/classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -23,11 +86,18 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-72bdaefc5e6d7ca52f9ce29ba05d0078fd0f0c43.jar" />
     </item>
     <item
-        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/11.0.4/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-0bc18a9ecb3a873bd62f87f9068acf085fddcb19.jar" />
+        sha1="f5ff5e3811e8c9485fd27f9052ae4d4d23a22d9d">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-3420648cfd2e59602fcbb50b550d4255e6b8e0b9.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-e15733ee4ad9425c172506c1f5c3bd54fb3f62b4.jar" />
     </item>
     <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
@@ -35,6 +105,27 @@
         revision="21.1.2"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-1a293c834849efd96b4cc45fb86d98cce0c90cb5.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-bc24aed415b32c352ec341538031d2560d0054b5.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e5b429c146094a612134910688d169ec08deeefb">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-0a7a933592f1f0b08b7fb0460bc7484a977a80af.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1b12397bc9f342b29d9e9108978828f99a6da579">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-4f38b71cc9a635ff95049024dae7a11ae3264e27.jar" />
     </item>
     <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/src/libs/achartengine-1.1.0.jar"
@@ -51,11 +142,32 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/EJML-core-0.26-70f28e6a0fc30c09c4c3ed419f6eca85fcd3f551.jar" />
     </item>
     <item
-        jar="/Users/Taek/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/11.0.4/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-555ebffff7a8d278f3211ed6854b87cf940441e4.jar" />
+        sha1="70ffe00aaf049893f59d1dad57bd82992faa38ef">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-7e248645e3a13db64ef80afabd23a7db6db940e5.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b6af36bacf1d812cd3dc45f9dcab9ea471ed91">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-d6b97668f48a186ee180fa680f81f880acd87ac2.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="364364bf77b4a71afc5930fc3ae57b3f0eea637c">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-0493408d7294b79f88f63b5d2ccda68db9c904b9.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.2.0/support-annotations-25.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
+        <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/support-annotations-25.2.0-b0ae4eef95db4029896789366967e21a816382d4.jar" />
     </item>
 
 </items>
