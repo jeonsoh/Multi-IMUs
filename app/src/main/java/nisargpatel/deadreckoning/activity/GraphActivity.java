@@ -47,7 +47,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
     private int thisDeviceNumber = 0;  //0번은 두개를 한화면에 표시하는 디바이스
     //private int thisDeviceNumber = 1;//1번은 송신만 하는 디바이스.
 
-    //
+    //tt
     private static final long GPS_SECONDS_PER_WEEK = 511200L;
 
     private static final float GYROSCOPE_INTEGRATION_SENSITIVITY = 0.0025f;
