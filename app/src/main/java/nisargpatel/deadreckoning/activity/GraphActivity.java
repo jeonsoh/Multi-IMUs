@@ -553,6 +553,10 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     dataValues.add(0, (float) event.timestamp);
                     dataValues.add(0f);
                     dataFileWriter.writeToFile("Linear_Acceleration", dataValues);
+
+                    Log.e("Linear_values", Arrays.toString(event.values));
+                    Linear_values = Arrays.toString(event.values);
+
                 }
 
             } else if (event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
