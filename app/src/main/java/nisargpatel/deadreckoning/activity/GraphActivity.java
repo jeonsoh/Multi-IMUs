@@ -112,7 +112,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
     private String gyro_heading="";
     private String gyro_values="";
     private String Linear_values="";
-
+    private String comp_heading="";
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -285,6 +285,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
                 Log.d("comp_heading", "" + compHeading);
+                comp_heading = compHeading+"";
 
                 //getting and rotating the previous XY points so North 0 on unit circle
                 float oPointX = scatterPlot.getLastYPoint();
@@ -480,7 +481,8 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     //complimentary filter
                     float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
-                    //Log.d("comp_heading", "" + compHeading);
+                    Log.d("comp_heading", "" + compHeading);
+                    comp_heading = compHeading+"";
 
                     //getting and rotating the previous XY points so North 0 on unit circle
                     float oPointX = scatterPlot.getLastYPoint();
@@ -518,6 +520,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         xyItem.setLinear_values(Linear_values);
                         xyItem.setMag_heading(mag_heading);
                         xyItem.setMag_values(mag_values);
+                        xyItem.setComp_heading(comp_heading);
                         mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
                                 .push()
                                 .setValue(xyItem)
@@ -570,7 +573,8 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     //complimentary filter
                     float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
-                    //Log.d("comp_heading", "" + compHeading);
+                    Log.d("comp_heading", "" + compHeading);
+                    comp_heading = compHeading+"";
 
                     //getting and rotating the previous XY points so North 0 on unit circle
                     float oPointX = scatterPlot.getLastYPoint();
@@ -607,6 +611,8 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         xyItem.setLinear_values(Linear_values);
                         xyItem.setMag_heading(mag_heading);
                         xyItem.setMag_values(mag_values);
+                        xyItem.setComp_heading(comp_heading);
+
                         mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
                                 .push()
                                 .setValue(xyItem)

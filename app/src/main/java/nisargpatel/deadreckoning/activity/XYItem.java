@@ -13,6 +13,16 @@ public class XYItem {
     String gyro_heading="";
     String gyro_values="";
     String Linear_values="";
+    String comp_heading="";
+
+    public String getComp_heading() {
+        return comp_heading;
+    }
+
+    public void setComp_heading(String comp_heading) {
+        this.comp_heading = comp_heading;
+    }
+
 
     public String getGravity_values() {
         return gravity_values;
