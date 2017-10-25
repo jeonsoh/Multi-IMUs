@@ -26,4 +26,9 @@ dependencies {
     compile files('src/libs/achartengine-1.1.0.jar')
     compile project(':zBarScannerLibrary')
     compile files('src/libs/EJML-core-0.26.jar')
+    compile 'com.google.firebase:firebase-database:11.0.4'
+    compile 'com.google.firebase:firebase-auth:11.0.4'
+    compile 'com.google.android.gms:play-services-auth:11.0.4'
+    compile 'com.google.firebase:firebase-core:11.0.4'
 }
+apply plugin: 'com.google.gms.google-services'

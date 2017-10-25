@@ -17,6 +17,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,8 +38,16 @@ import nisargpatel.deadreckoning.orientation.GyroscopeEulerOrientation;
 import nisargpatel.deadreckoning.orientation.MagneticFieldOrientation;
 import nisargpatel.deadreckoning.stepcounting.DynamicStepCounter;
 
-public class GraphActivity extends Activity implements SensorEventListener, LocationListener{
+public class GraphActivity extends Activity implements SensorEventListener, LocationListener {
+//
 
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private FirebaseDatabase mFirebaseDatabase;
+    private int thisDeviceNumber = 0;  //0번은 두개를 한화면에 표시하는 디바이스
+    //private int thisDeviceNumber = 1;//1번은 송신만 하는 디바이스.
+
+    //tt
     private static final long GPS_SECONDS_PER_WEEK = 511200L;
 
     private static final float GYROSCOPE_INTEGRATION_SENSITIVITY = 0.0025f;
@@ -54,6 +70,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
             "XY_Data_Set" + "\n" + "weekGPS;secGPS;t;strideLength;magHeading;gyroHeading;originalPointX;originalPointY;rotatedPointX;rotatedPointY"
     };
 
+
     private DynamicStepCounter dynamicStepCounter;
     private GyroscopeDeltaOrientation gyroscopeDeltaOrientation;
     private GyroscopeEulerOrientation gyroscopeEulerOrientation;
@@ -63,6 +80,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
     private Button buttonStart;
     private Button buttonStop;
     private Button buttonAddPoint;
+    private Button sendbutton;
     private LinearLayout mLinearLayout;
 
     private SensorManager sensorManager;
@@ -88,11 +106,28 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
     private float initialHeading;
 
+    private String gravity_values="";
+    private String mag_heading="";
+    private String mag_values="";
+    private String gyro_heading="";
+    private String gyro_values="";
+    private String Linear_values="";
+    private String comp_heading="";
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+
+        //
+
+        mFirebaseAuth = mFirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        //
+
 
         //defining needed variables
         gyroBias = null;
@@ -110,7 +145,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
         startTime = 0;
 
         //getting global settings
-        strideLength =  getIntent().getFloatExtra("stride_length", 2.5f);
+        strideLength = getIntent().getFloatExtra("stride_length", 2.5f);
         isCalibrated = getIntent().getBooleanExtra("is_calibrated", false);
         gyroBias = getIntent().getFloatArrayExtra("gyro_bias");
         magBias = getIntent().getFloatArrayExtra("mag_bias");
@@ -127,16 +162,16 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
         gyroscopeDeltaOrientation = new GyroscopeDeltaOrientation(GYROSCOPE_INTEGRATION_SENSITIVITY, gyroBias);
         if (usingDefaultCounter) //if using default TYPE_STEP_DETECTOR, don't need DynamicStepCounter
             dynamicStepCounter = null;
-        else
-            if (!counterSensitivity.equals("default"))
-                dynamicStepCounter = new DynamicStepCounter(Double.parseDouble(counterSensitivity));
-            else //if cannot use TYPE_STEP_DETECTOR but sensitivity = "default", use 1.0 sensitivity until user calibrates
-                dynamicStepCounter = new DynamicStepCounter(1.0);
+        else if (!counterSensitivity.equals("default"))
+            dynamicStepCounter = new DynamicStepCounter(Double.parseDouble(counterSensitivity));
+        else //if cannot use TYPE_STEP_DETECTOR but sensitivity = "default", use 1.0 sensitivity until user calibrates
+            dynamicStepCounter = new DynamicStepCounter(1.0);
 
         //defining views
         buttonStart = (Button) findViewById(R.id.buttonGraphStart);
         buttonStop = (Button) findViewById(R.id.buttonGraphStop);
         buttonAddPoint = (Button) findViewById(R.id.buttonGraphClear);
+        sendbutton = (Button) findViewById(R.id.deviceCheck);
         mLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutGraph);
 
         //setting up graph with origin
@@ -239,7 +274,6 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 buttonStart.setEnabled(true);
                 buttonAddPoint.setEnabled(true);
                 buttonStop.setEnabled(false);
-
             }
         });
 
@@ -251,6 +285,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
                 Log.d("comp_heading", "" + compHeading);
+                comp_heading = compHeading+"";
 
                 //getting and rotating the previous XY points so North 0 on unit circle
                 float oPointX = scatterPlot.getLastYPoint();
@@ -266,12 +301,31 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
                 scatterPlot.addPoint(rPointX, rPointY);
 
+                if (thisDeviceNumber == 1) {
+                    XYItem xyItem = new XYItem();
+                    xyItem.setX(rPointX);
+                    xyItem.setY(rPointY);
+                    mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+                            .push()
+                            .setValue(xyItem)
+                            .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
+                                    //Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+
                 mLinearLayout.removeAllViews();
                 mLinearLayout.addView(scatterPlot.getGraphView(getApplicationContext()));
 
             }
         });
 
+        if (thisDeviceNumber == 0) {
+            displayXY();
+        }
     }
 
     @Override
@@ -330,45 +384,54 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        if(firstRun) {
+
+        if (firstRun) {
             startTime = event.timestamp;
             firstRun = false;
         }
 
         if (event.sensor.getType() == Sensor.TYPE_GRAVITY) {
             currGravity = event.values;
-            Log.d("gravity_values", Arrays.toString(event.values));
+           // Log.d("gravity_values", Arrays.toString(event.values));
         } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD ||
                 event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED) {
             currMag = event.values;
-            Log.d("mag_values", Arrays.toString(event.values));
+            //Log.d("mag_values", Arrays.toString(event.values));
         }
 
         if (isRunning) {
             if (event.sensor.getType() == Sensor.TYPE_GRAVITY) {
                 ArrayList<Float> dataValues = ExtraFunctions.arrayToList(event.values);
-                dataValues.add(0, (float)(event.timestamp - startTime));
+                dataValues.add(0, (float) (event.timestamp - startTime));
                 dataFileWriter.writeToFile("Gravity", dataValues);
+                Log.e("gravity_values", Arrays.toString(event.values));
+                gravity_values = Arrays.toString(event.values);
+
             } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD || event.sensor.getType() ==
                     Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED) {
 
                 magHeading = MagneticFieldOrientation.getHeading(currGravity, currMag, magBias);
 
                 Log.d("mag_heading", "" + magHeading);
+                mag_heading = magHeading+"";
 
                 //saving magnetic field data
                 ArrayList<Float> dataValues = ExtraFunctions.createList(
                         event.values[0], event.values[1], event.values[2],
                         magBias[0], magBias[1], magBias[2]
                 );
-                dataValues.add(0, (float)(event.timestamp - startTime));
+                dataValues.add(0, (float) (event.timestamp - startTime));
                 dataValues.add(magHeading);
                 dataFileWriter.writeToFile("Magnetic_Field_Uncalibrated", dataValues);
+
+                Log.e("mag_values", Arrays.toString(event.values));
+                mag_values = Arrays.toString(event.values);
 
             } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE ||
                     event.sensor.getType() == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
@@ -379,22 +442,26 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 gyroHeading += initialHeading;
 
                 Log.d("gyro_heading", "" + gyroHeading);
+                gyro_heading = gyroHeading+"";
 
                 //saving gyroscope data
                 ArrayList<Float> dataValues = ExtraFunctions.createList(
                         event.values[0], event.values[1], event.values[2],
                         gyroBias[0], gyroBias[1], gyroBias[2]
                 );
-                dataValues.add(0, (float)(event.timestamp - startTime));
+                dataValues.add(0, (float) (event.timestamp - startTime));
                 dataValues.add(gyroHeading);
                 dataFileWriter.writeToFile("Gyroscope_Uncalibrated", dataValues);
+
+                Log.e("gyro_values", Arrays.toString(event.values));
+                gyro_values = Arrays.toString(event.values);
 
             } else if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
 
                 float norm = ExtraFunctions.calcNorm(
                         event.values[0] +
-                        event.values[1] +
-                        event.values[2]
+                                event.values[1] +
+                                event.values[2]
                 );
 
                 //if step is found, findStep == true
@@ -404,14 +471,18 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
                     //saving linear acceleration data
                     ArrayList<Float> dataValues = ExtraFunctions.arrayToList(event.values);
-                    dataValues.add(0, (float)(event.timestamp - startTime));
+                    dataValues.add(0, (float) (event.timestamp - startTime));
                     dataValues.add(1f);
                     dataFileWriter.writeToFile("Linear_Acceleration", dataValues);
+
+                    Log.e("Linear_values", Arrays.toString(event.values));
+                    Linear_values = Arrays.toString(event.values);
 
                     //complimentary filter
                     float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
-                    //Log.d("comp_heading", "" + compHeading);
+                    Log.d("comp_heading", "" + compHeading);
+                    comp_heading = compHeading+"";
 
                     //getting and rotating the previous XY points so North 0 on unit circle
                     float oPointX = scatterPlot.getLastYPoint();
@@ -424,7 +495,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     //rotating points by 90 degrees, so north is up
                     float rPointX = -oPointY;
                     float rPointY = oPointX;
-                    if(rPointX > 300){
+                    /*if(rPointX > 300){
                         rPointX = 300;
                     }else if(rPointX < -300){
                         rPointX = -300;
@@ -433,8 +504,34 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         rPointY = 300;
                     }else if(rPointY < -300){
                         rPointY = -300;
-                    }
+                    }*/
                     scatterPlot.addPoint(rPointX, rPointY);
+
+                    Log.e("rX, rY---------------", rPointX+","+rPointY);
+
+
+                    if (thisDeviceNumber == 1) {
+                        XYItem xyItem = new XYItem();
+                        xyItem.setX(rPointX);
+                        xyItem.setY(rPointY);
+                        xyItem.setGravity_values(gravity_values);
+                        xyItem.setGyro_heading(gyro_heading);
+                        xyItem.setGyro_values(gyro_values);
+                        xyItem.setLinear_values(Linear_values);
+                        xyItem.setMag_heading(mag_heading);
+                        xyItem.setMag_values(mag_values);
+                        xyItem.setComp_heading(comp_heading);
+                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+                                .push()
+                                .setValue(xyItem)
+                                .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
+                                        Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
 
                     //saving XY location data
                     dataFileWriter.writeToFile("XY_Data_Set",
@@ -459,18 +556,25 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     dataValues.add(0, (float) event.timestamp);
                     dataValues.add(0f);
                     dataFileWriter.writeToFile("Linear_Acceleration", dataValues);
+
+                    Log.e("Linear_values", Arrays.toString(event.values));
+                    Linear_values = Arrays.toString(event.values);
+
                 }
 
             } else if (event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
 
                 boolean stepFound = (event.values[0] == 1);
+                Log.e("Linear_values", Arrays.toString(event.values));
+                Linear_values = Arrays.toString(event.values);
 
                 if (stepFound) {
 
                     //complimentary filter
                     float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
-                    //Log.d("comp_heading", "" + compHeading);
+                    Log.d("comp_heading", "" + compHeading);
+                    comp_heading = compHeading+"";
 
                     //getting and rotating the previous XY points so North 0 on unit circle
                     float oPointX = scatterPlot.getLastYPoint();
@@ -484,7 +588,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     float rPointX = -oPointY;
                     float rPointY = oPointX;
 
-                    if(rPointX > 300){
+                    /*if(rPointX > 300){
                         rPointX = 300;
                     }else if(rPointX < -300){
                         rPointX = -300;
@@ -493,8 +597,34 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         rPointY = 300;
                     }else if(rPointY < -300){
                         rPointY = -300;
-                    }
+                    }*/
                     scatterPlot.addPoint(rPointX, rPointY);//점찍는거.
+                    Log.e("rX, rY---------------", rPointX+","+rPointY);
+
+                    if (thisDeviceNumber == 1) {
+                        XYItem xyItem = new XYItem();
+                        xyItem.setX(rPointX);
+                        xyItem.setY(rPointY);
+                        xyItem.setGravity_values(gravity_values);
+                        xyItem.setGyro_heading(gyro_heading);
+                        xyItem.setGyro_values(gyro_values);
+                        xyItem.setLinear_values(Linear_values);
+                        xyItem.setMag_heading(mag_heading);
+                        xyItem.setMag_values(mag_values);
+                        xyItem.setComp_heading(comp_heading);
+
+                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+                                .push()
+                                .setValue(xyItem)
+                                .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
+                                        Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+
 
                     //saving XY location data
                     dataFileWriter.writeToFile("XY_Data_Set",
@@ -526,13 +656,16 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {}
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
 
     @Override
-    public void onProviderEnabled(String provider) {}
+    public void onProviderEnabled(String provider) {
+    }
 
     @Override
-    public void onProviderDisabled(String provider) {}
+    public void onProviderDisabled(String provider) {
+    }
 
     private void createFiles() {
         if (!areFilesCreated) {
@@ -545,4 +678,58 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
         }
     }
 
+    public void displayXY() {
+        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {//데이터 추가된 경우
+                        XYItem xyitem = dataSnapshot.getValue(XYItem.class);
+                        scatterPlot.add_ReceivedPoint(xyitem.getX(), xyitem.getY());
+                        mLinearLayout.removeAllViews();
+                        mLinearLayout.addView(scatterPlot.getGraphView(getApplicationContext()));
+                        /*Memo memo = dataSnapshot.getValue(Memo.class);
+                        memo.setKey(dataSnapshot.getKey());
+                        mMemoAdapter.add(memo);
+                        mRecyclerView.scrollToPosition(mMemoAdapter.getItemCount()-1);*/
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {//데이터 수정된 경우
+                        XYItem xyitem = dataSnapshot.getValue(XYItem.class);
+                        scatterPlot.add_ReceivedPoint(xyitem.getX(), xyitem.getY());
+                        mLinearLayout.removeAllViews();
+                        mLinearLayout.addView(scatterPlot.getGraphView(getApplicationContext()));
+                        /*Memo memo = dataSnapshot.getValue(Memo.class);
+                        memo.setKey(dataSnapshot.getKey());
+                        mMemoAdapter.update(memo);*/
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {//데이터 삭제된 경우
+                        scatterPlot.clearSet();
+                        scatterPlot.addPoint(0, 0);
+                        mLinearLayout.removeAllViews();
+                        mLinearLayout.addView(scatterPlot.getGraphView(getApplicationContext()));
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public void removeAllValue(View v) {
+        mFirebaseDatabase.getReference("dead/").removeValue();
+    }
+    public void sendDevice(View v){
+        thisDeviceNumber = 1;
+        sendbutton.setText("설정완료");
+    }
 }
+
