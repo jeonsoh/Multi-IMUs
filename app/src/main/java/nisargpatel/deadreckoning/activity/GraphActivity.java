@@ -106,6 +106,14 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
     private float initialHeading;
 
+    private String gravity_values="";
+    private String mag_heading="";
+    private String mag_values="";
+    private String gyro_heading="";
+    private String gyro_values="";
+    private String Linear_values="";
+    private String comp_heading="";
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -277,6 +285,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
                 Log.d("comp_heading", "" + compHeading);
+                comp_heading = compHeading+"";
 
                 //getting and rotating the previous XY points so North 0 on unit circle
                 float oPointX = scatterPlot.getLastYPoint();
@@ -381,6 +390,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
     @Override
     public void onSensorChanged(SensorEvent event) {
 
+
         if (firstRun) {
             startTime = event.timestamp;
             firstRun = false;
@@ -388,11 +398,11 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
         if (event.sensor.getType() == Sensor.TYPE_GRAVITY) {
             currGravity = event.values;
-            Log.d("gravity_values", Arrays.toString(event.values));
+           // Log.d("gravity_values", Arrays.toString(event.values));
         } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD ||
                 event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED) {
             currMag = event.values;
-            Log.d("mag_values", Arrays.toString(event.values));
+            //Log.d("mag_values", Arrays.toString(event.values));
         }
 
         if (isRunning) {
@@ -400,12 +410,16 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 ArrayList<Float> dataValues = ExtraFunctions.arrayToList(event.values);
                 dataValues.add(0, (float) (event.timestamp - startTime));
                 dataFileWriter.writeToFile("Gravity", dataValues);
+                Log.e("gravity_values", Arrays.toString(event.values));
+                gravity_values = Arrays.toString(event.values);
+
             } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD || event.sensor.getType() ==
                     Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED) {
 
                 magHeading = MagneticFieldOrientation.getHeading(currGravity, currMag, magBias);
 
                 Log.d("mag_heading", "" + magHeading);
+                mag_heading = magHeading+"";
 
                 //saving magnetic field data
                 ArrayList<Float> dataValues = ExtraFunctions.createList(
@@ -416,6 +430,9 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 dataValues.add(magHeading);
                 dataFileWriter.writeToFile("Magnetic_Field_Uncalibrated", dataValues);
 
+                Log.e("mag_values", Arrays.toString(event.values));
+                mag_values = Arrays.toString(event.values);
+
             } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE ||
                     event.sensor.getType() == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
 
@@ -425,6 +442,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 gyroHeading += initialHeading;
 
                 Log.d("gyro_heading", "" + gyroHeading);
+                gyro_heading = gyroHeading+"";
 
                 //saving gyroscope data
                 ArrayList<Float> dataValues = ExtraFunctions.createList(
@@ -434,6 +452,9 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 dataValues.add(0, (float) (event.timestamp - startTime));
                 dataValues.add(gyroHeading);
                 dataFileWriter.writeToFile("Gyroscope_Uncalibrated", dataValues);
+
+                Log.e("gyro_values", Arrays.toString(event.values));
+                gyro_values = Arrays.toString(event.values);
 
             } else if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
 
@@ -454,10 +475,14 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     dataValues.add(1f);
                     dataFileWriter.writeToFile("Linear_Acceleration", dataValues);
 
+                    Log.e("Linear_values", Arrays.toString(event.values));
+                    Linear_values = Arrays.toString(event.values);
+
                     //complimentary filter
                     float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
-                    //Log.d("comp_heading", "" + compHeading);
+                    Log.d("comp_heading", "" + compHeading);
+                    comp_heading = compHeading+"";
 
                     //getting and rotating the previous XY points so North 0 on unit circle
                     float oPointX = scatterPlot.getLastYPoint();
@@ -481,10 +506,21 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         rPointY = -300;
                     }*/
                     scatterPlot.addPoint(rPointX, rPointY);
+
+                    Log.e("rX, rY---------------", rPointX+","+rPointY);
+
+
                     if (thisDeviceNumber == 1) {
                         XYItem xyItem = new XYItem();
                         xyItem.setX(rPointX);
                         xyItem.setY(rPointY);
+                        xyItem.setGravity_values(gravity_values);
+                        xyItem.setGyro_heading(gyro_heading);
+                        xyItem.setGyro_values(gyro_values);
+                        xyItem.setLinear_values(Linear_values);
+                        xyItem.setMag_heading(mag_heading);
+                        xyItem.setMag_values(mag_values);
+                        xyItem.setComp_heading(comp_heading);
                         mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
                                 .push()
                                 .setValue(xyItem)
@@ -492,7 +528,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
-                                        //Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }
@@ -520,18 +556,25 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     dataValues.add(0, (float) event.timestamp);
                     dataValues.add(0f);
                     dataFileWriter.writeToFile("Linear_Acceleration", dataValues);
+
+                    Log.e("Linear_values", Arrays.toString(event.values));
+                    Linear_values = Arrays.toString(event.values);
+
                 }
 
             } else if (event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
 
                 boolean stepFound = (event.values[0] == 1);
+                Log.e("Linear_values", Arrays.toString(event.values));
+                Linear_values = Arrays.toString(event.values);
 
                 if (stepFound) {
 
                     //complimentary filter
                     float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
-                    //Log.d("comp_heading", "" + compHeading);
+                    Log.d("comp_heading", "" + compHeading);
+                    comp_heading = compHeading+"";
 
                     //getting and rotating the previous XY points so North 0 on unit circle
                     float oPointX = scatterPlot.getLastYPoint();
@@ -556,10 +599,20 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         rPointY = -300;
                     }*/
                     scatterPlot.addPoint(rPointX, rPointY);//점찍는거.
+                    Log.e("rX, rY---------------", rPointX+","+rPointY);
+
                     if (thisDeviceNumber == 1) {
                         XYItem xyItem = new XYItem();
                         xyItem.setX(rPointX);
                         xyItem.setY(rPointY);
+                        xyItem.setGravity_values(gravity_values);
+                        xyItem.setGyro_heading(gyro_heading);
+                        xyItem.setGyro_values(gyro_values);
+                        xyItem.setLinear_values(Linear_values);
+                        xyItem.setMag_heading(mag_heading);
+                        xyItem.setMag_values(mag_values);
+                        xyItem.setComp_heading(comp_heading);
+
                         mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
                                 .push()
                                 .setValue(xyItem)
@@ -567,7 +620,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
-                                        //Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }
