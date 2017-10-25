@@ -24,6 +24,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,6 +114,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
     private String gyro_values="";
     private String Linear_values="";
     private String comp_heading="";
+    private float average_comp;
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -305,7 +307,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     XYItem xyItem = new XYItem();
                     xyItem.setX(rPointX);
                     xyItem.setY(rPointY);
-                    mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+                    mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid()+"/data")
                             .push()
                             .setValue(xyItem)
                             .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
@@ -324,7 +326,8 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
         });
 
         if (thisDeviceNumber == 0) {
-            displayXY();
+            //displayXY();
+            displayAverage();
         }
     }
 
@@ -484,6 +487,18 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     Log.d("comp_heading", "" + compHeading);
                     comp_heading = compHeading+"";
 
+                    mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+                            .child("comp")
+                            .setValue(comp_heading)
+                            .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
+                                   // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
                     //getting and rotating the previous XY points so North 0 on unit circle
                     float oPointX = scatterPlot.getLastYPoint();
                     float oPointY = -scatterPlot.getLastXPoint();
@@ -509,6 +524,20 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
                     Log.e("rX, rY---------------", rPointX+","+rPointY);
 
+          /*          float AVR_X = scatterPlot.getLastYPoint();
+                    float AVR_Y = -scatterPlot.getLastXPoint();
+
+                    //calculating XY points from heading and stride_length
+                    AVR_X += ExtraFunctions.getXFromPolar(strideLength, average_comp);
+                    AVR_Y += ExtraFunctions.getYFromPolar(strideLength, average_comp);
+
+                    //rotating points by 90 degrees, so north is up
+                    float AVR_PointX = -AVR_X;
+                    float AVR_PointY = AVR_Y;
+                    Log.e("average_XY----", AVR_PointX+","+AVR_PointY);
+
+                    scatterPlot.add_ReceivedPoint(AVR_PointX, AVR_PointY);
+*/
 
                     if (thisDeviceNumber == 1) {
                         XYItem xyItem = new XYItem();
@@ -521,14 +550,14 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         xyItem.setMag_heading(mag_heading);
                         xyItem.setMag_values(mag_values);
                         xyItem.setComp_heading(comp_heading);
-                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid()+"/data")
                                 .push()
                                 .setValue(xyItem)
                                 .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
-                                        Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                       // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }
@@ -576,6 +605,18 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     Log.d("comp_heading", "" + compHeading);
                     comp_heading = compHeading+"";
 
+                    mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+                            .child("comp")
+                            .setValue(comp_heading)
+                            .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
+                                   // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
                     //getting and rotating the previous XY points so North 0 on unit circle
                     float oPointX = scatterPlot.getLastYPoint();
                     float oPointY = -scatterPlot.getLastXPoint();
@@ -601,6 +642,21 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     scatterPlot.addPoint(rPointX, rPointY);//점찍는거.
                     Log.e("rX, rY---------------", rPointX+","+rPointY);
 
+
+         /*           float AVR_X = scatterPlot.getLastYPoint();
+                    float AVR_Y = -scatterPlot.getLastXPoint();
+
+                    //calculating XY points from heading and stride_length
+                    AVR_X += ExtraFunctions.getXFromPolar(strideLength, average_comp);
+                    AVR_Y += ExtraFunctions.getYFromPolar(strideLength, average_comp);
+
+                    //rotating points by 90 degrees, so north is up
+                    float AVR_PointX = -AVR_X;
+                    float AVR_PointY = AVR_Y;
+                    Log.e("average_XY----", AVR_PointX+","+AVR_PointY);
+
+                    scatterPlot.add_ReceivedPoint(AVR_PointX, AVR_PointY);
+*/
                     if (thisDeviceNumber == 1) {
                         XYItem xyItem = new XYItem();
                         xyItem.setX(rPointX);
@@ -613,14 +669,14 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         xyItem.setMag_values(mag_values);
                         xyItem.setComp_heading(comp_heading);
 
-                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid()+"/data")
                                 .push()
                                 .setValue(xyItem)
                                 .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
-                                        Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                      //  Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }
@@ -679,7 +735,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
     }
 
     public void displayXY() {
-        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid()+"/data")
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {//데이터 추가된 경우
@@ -722,6 +778,58 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
                     }
                 });
+    }
+
+    public void displayAverage() {
+
+        mFirebaseDatabase.getReference("dead")
+
+                .addValueEventListener(new ValueEventListener() {
+                    //ArrayList comp_value;
+                    float sum=0;
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.e("Count " ,""+dataSnapshot.getChildrenCount());
+                        //comp_value = new float[(int)dataSnapshot.getChildrenCount()];
+                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                            String post = (String) postSnapshot.child("comp").getValue();
+                            Log.e("Get Data----", post);
+                            //comp_value.add(post);
+                            sum += Float.parseFloat(post);
+                        }
+
+                        average_comp = sum/dataSnapshot.getChildrenCount();
+                        Log.e("average_comp----", average_comp+"");
+
+                        //getting and rotating the previous XY points so North 0 on unit circle
+                   /*     float AVR_X = scatterPlot.getLastYPoint();
+                        float AVR_Y = -scatterPlot.getLastXPoint();
+
+                        //calculating XY points from heading and stride_length
+                        AVR_X += ExtraFunctions.getXFromPolar(strideLength, average_comp);
+                        AVR_Y += ExtraFunctions.getYFromPolar(strideLength, average_comp);
+
+                        //rotating points by 90 degrees, so north is up
+                        float AVR_PointX = -AVR_X;
+                        float AVR_PointY = AVR_Y;
+                        Log.e("average_XY----", AVR_PointX+","+AVR_PointY);
+
+                        scatterPlot.add_ReceivedPoint(AVR_PointX, AVR_PointY);*/
+                     //   mLinearLayout.removeAllViews();
+                    //    mLinearLayout.addView(scatterPlot.getGraphView(getApplicationContext()));
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e("The read failed: " ,databaseError.getMessage());
+                    }
+
+
+                }
+         );
+
     }
 
     public void removeAllValue(View v) {
