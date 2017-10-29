@@ -82,6 +82,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
     private Button buttonStop;
     private Button buttonAddPoint;
     private Button sendbutton;
+    private Button sendInitialBtn;
     private LinearLayout mLinearLayout;
 
     private SensorManager sensorManager;
@@ -107,14 +108,16 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
     private float initialHeading;
 
-    private String gravity_values="";
-    private String mag_heading="";
-    private String mag_values="";
-    private String gyro_heading="";
-    private String gyro_values="";
-    private String Linear_values="";
-    private String comp_heading="";
+    private String gravity_values = "";
+    private String mag_heading = "";
+    private String mag_values = "";
+    private String gyro_heading = "";
+    private String gyro_values = "";
+    private String Linear_values = "";
+    private String comp_heading = "";
     private float average_comp;
+    private int stepCount = 0;
+    float compHeading = 0;
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -170,6 +173,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
             dynamicStepCounter = new DynamicStepCounter(1.0);
 
         //defining views
+        sendInitialBtn = (Button) findViewById(R.id.sendInitialValue_Btn);
         buttonStart = (Button) findViewById(R.id.buttonGraphStart);
         buttonStop = (Button) findViewById(R.id.buttonGraphStop);
         buttonAddPoint = (Button) findViewById(R.id.buttonGraphClear);
@@ -287,7 +291,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
                 Log.d("comp_heading", "" + compHeading);
-                comp_heading = compHeading+"";
+                comp_heading = compHeading + "";
 
                 //getting and rotating the previous XY points so North 0 on unit circle
                 float oPointX = scatterPlot.getLastYPoint();
@@ -307,7 +311,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     XYItem xyItem = new XYItem();
                     xyItem.setX(rPointX);
                     xyItem.setY(rPointY);
-                    mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid()+"/data")
+                    mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid() + "/data")
                             .push()
                             .setValue(xyItem)
                             .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
@@ -325,9 +329,67 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
             }
         });
 
+        sendInitialBtn.setOnClickListener(new View.OnClickListener() {//start 누르고 전송해야됨.
+
+            @Override
+            public void onClick(View v) {
+                if (thisDeviceNumber == 0) {
+                    final float compHeadingtemp = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
+                    mFirebaseDatabase.getReference("dead/")
+                            .child("initialcomp")
+                            .setValue(compHeadingtemp + "")
+                            .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    compHeading = compHeadingtemp;
+                                    //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
+                                    Toast.makeText(GraphActivity.this, "보내기완료", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    mFirebaseDatabase.getReference("dead/")
+                            .child("initialvalue")
+                            .setValue(initialHeading + "")
+                            .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
+                                    Toast.makeText(GraphActivity.this, "보내기완료", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    mFirebaseDatabase.getReference("dead/")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    compHeading = Float.parseFloat((String) dataSnapshot.child("initialcomp").getValue());
+                                    Toast.makeText(GraphActivity.this, "보내기완료"+compHeading, Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                    mFirebaseDatabase.getReference("dead/")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    initialHeading = Float.parseFloat((String) dataSnapshot.child("initialvalue").getValue());
+                                    Toast.makeText(GraphActivity.this, "보내기완료"+compHeading, Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                }
+            }
+        });
+
         if (thisDeviceNumber == 0) {
-            //displayXY();
-            displayAverage();
+            displayXY();
+            //displayAverage();
         }
     }
 
@@ -401,7 +463,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
         if (event.sensor.getType() == Sensor.TYPE_GRAVITY) {
             currGravity = event.values;
-           // Log.d("gravity_values", Arrays.toString(event.values));
+            // Log.d("gravity_values", Arrays.toString(event.values));
         } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD ||
                 event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED) {
             currMag = event.values;
@@ -422,7 +484,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 magHeading = MagneticFieldOrientation.getHeading(currGravity, currMag, magBias);
 
                 Log.d("mag_heading", "" + magHeading);
-                mag_heading = magHeading+"";
+                mag_heading = magHeading + "";
 
                 //saving magnetic field data
                 ArrayList<Float> dataValues = ExtraFunctions.createList(
@@ -445,7 +507,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 gyroHeading += initialHeading;
 
                 Log.d("gyro_heading", "" + gyroHeading);
-                gyro_heading = gyroHeading+"";
+                gyro_heading = gyroHeading + "";
 
                 //saving gyroscope data
                 ArrayList<Float> dataValues = ExtraFunctions.createList(
@@ -471,7 +533,12 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 boolean stepFound = dynamicStepCounter.findStep(norm);
 
                 if (stepFound) {
+                    if (stepCount == 0) {
 
+                    } else {
+                        compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
+                        stepCount++;
+                    }
                     //saving linear acceleration data
                     ArrayList<Float> dataValues = ExtraFunctions.arrayToList(event.values);
                     dataValues.add(0, (float) (event.timestamp - startTime));
@@ -482,10 +549,10 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     Linear_values = Arrays.toString(event.values);
 
                     //complimentary filter
-                    float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
+
 
                     Log.d("comp_heading", "" + compHeading);
-                    comp_heading = compHeading+"";
+                    comp_heading = compHeading + "";
 
                     mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
                             .child("comp")
@@ -494,7 +561,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
-                                   // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -522,7 +589,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     }*/
                     scatterPlot.addPoint(rPointX, rPointY);
 
-                    Log.e("rX, rY---------------", rPointX+","+rPointY);
+                    Log.e("rX, rY---------------", rPointX + "," + rPointY);
 
           /*          float AVR_X = scatterPlot.getLastYPoint();
                     float AVR_Y = -scatterPlot.getLastXPoint();
@@ -538,7 +605,28 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
                     scatterPlot.add_ReceivedPoint(AVR_PointX, AVR_PointY);
 */
-
+                    if (thisDeviceNumber == 0) {
+                        XYItem xyItem = new XYItem();
+                        xyItem.setX(rPointX);
+                        xyItem.setY(rPointY);
+                        xyItem.setGravity_values(gravity_values);
+                        xyItem.setGyro_heading(gyro_heading);
+                        xyItem.setGyro_values(gyro_values);
+                        xyItem.setLinear_values(Linear_values);
+                        xyItem.setMag_heading(mag_heading);
+                        xyItem.setMag_values(mag_values);
+                        xyItem.setComp_heading(comp_heading);
+                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid() + "/data1")
+                                .push()
+                                .setValue(xyItem)
+                                .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
+                                        // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
                     if (thisDeviceNumber == 1) {
                         XYItem xyItem = new XYItem();
                         xyItem.setX(rPointX);
@@ -550,14 +638,14 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         xyItem.setMag_heading(mag_heading);
                         xyItem.setMag_values(mag_values);
                         xyItem.setComp_heading(comp_heading);
-                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid()+"/data")
+                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid() + "/data2")
                                 .push()
                                 .setValue(xyItem)
                                 .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
-                                       // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                        // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }
@@ -579,6 +667,8 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     mLinearLayout.addView(scatterPlot.getGraphView(getApplicationContext()));
 
                     //if step is not found
+
+
                 } else {
                     //saving linear acceleration data
                     ArrayList<Float> dataValues = ExtraFunctions.arrayToList(event.values);
@@ -598,12 +688,16 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 Linear_values = Arrays.toString(event.values);
 
                 if (stepFound) {
+                    if (stepCount == 0) {
 
+                    } else {
+                        compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
+                        stepCount++;
+                    }
                     //complimentary filter
-                    float compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
 
                     Log.d("comp_heading", "" + compHeading);
-                    comp_heading = compHeading+"";
+                    comp_heading = compHeading + "";
 
                     mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
                             .child("comp")
@@ -612,7 +706,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
-                                   // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -640,7 +734,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         rPointY = -300;
                     }*/
                     scatterPlot.addPoint(rPointX, rPointY);//점찍는거.
-                    Log.e("rX, rY---------------", rPointX+","+rPointY);
+                    Log.e("rX, rY---------------", rPointX + "," + rPointY);
 
 
          /*           float AVR_X = scatterPlot.getLastYPoint();
@@ -657,6 +751,28 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
                     scatterPlot.add_ReceivedPoint(AVR_PointX, AVR_PointY);
 */
+                    if (thisDeviceNumber == 0) {
+                        XYItem xyItem = new XYItem();
+                        xyItem.setX(rPointX);
+                        xyItem.setY(rPointY);
+                        xyItem.setGravity_values(gravity_values);
+                        xyItem.setGyro_heading(gyro_heading);
+                        xyItem.setGyro_values(gyro_values);
+                        xyItem.setLinear_values(Linear_values);
+                        xyItem.setMag_heading(mag_heading);
+                        xyItem.setMag_values(mag_values);
+                        xyItem.setComp_heading(comp_heading);
+                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid() + "/data1")
+                                .push()
+                                .setValue(xyItem)
+                                .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
+                                        // Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
                     if (thisDeviceNumber == 1) {
                         XYItem xyItem = new XYItem();
                         xyItem.setX(rPointX);
@@ -669,14 +785,14 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         xyItem.setMag_values(mag_values);
                         xyItem.setComp_heading(comp_heading);
 
-                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid()+"/data")
+                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid() + "/data2")
                                 .push()
                                 .setValue(xyItem)
                                 .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
-                                      //  Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
+                                        //  Toast.makeText(GraphActivity.this,"추가됨",Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }
@@ -700,6 +816,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 }
 
             }
+
         }
 
     }
@@ -735,7 +852,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
     }
 
     public void displayXY() {
-        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid()+"/data")
+        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid() + "/data1")
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {//데이터 추가된 경우
@@ -785,24 +902,24 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
         mFirebaseDatabase.getReference("dead")
 
                 .addValueEventListener(new ValueEventListener() {
-                    //ArrayList comp_value;
-                    float sum=0;
+                                           //ArrayList comp_value;
+                                           float sum = 0;
 
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.e("Count " ,""+dataSnapshot.getChildrenCount());
-                        //comp_value = new float[(int)dataSnapshot.getChildrenCount()];
-                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                            String post = (String) postSnapshot.child("comp").getValue();
-                            Log.e("Get Data----", post);
-                            //comp_value.add(post);
-                            sum += Float.parseFloat(post);
-                        }
+                                           @Override
+                                           public void onDataChange(DataSnapshot dataSnapshot) {
+                                               Log.e("Count ", "" + dataSnapshot.getChildrenCount());
+                                               //comp_value = new float[(int)dataSnapshot.getChildrenCount()];
+                                               for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                                   String post = (String) postSnapshot.child("comp").getValue();
+                                                   Log.e("Get Data----", post);
+                                                   //comp_value.add(post);
+                                                   sum += Float.parseFloat(post);
+                                               }
 
-                        average_comp = sum/dataSnapshot.getChildrenCount();
-                        Log.e("average_comp----", average_comp+"");
+                                               average_comp = sum / dataSnapshot.getChildrenCount();
+                                               Log.e("average_comp----", average_comp + "");
 
-                        //getting and rotating the previous XY points so North 0 on unit circle
+                                               //getting and rotating the previous XY points so North 0 on unit circle
                    /*     float AVR_X = scatterPlot.getLastYPoint();
                         float AVR_Y = -scatterPlot.getLastXPoint();
 
@@ -816,26 +933,27 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         Log.e("average_XY----", AVR_PointX+","+AVR_PointY);
 
                         scatterPlot.add_ReceivedPoint(AVR_PointX, AVR_PointY);*/
-                     //   mLinearLayout.removeAllViews();
-                    //    mLinearLayout.addView(scatterPlot.getGraphView(getApplicationContext()));
+                                               //   mLinearLayout.removeAllViews();
+                                               //    mLinearLayout.addView(scatterPlot.getGraphView(getApplicationContext()));
 
-                    }
+                                           }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.e("The read failed: " ,databaseError.getMessage());
-                    }
+                                           @Override
+                                           public void onCancelled(DatabaseError databaseError) {
+                                               Log.e("The read failed: ", databaseError.getMessage());
+                                           }
 
 
-                }
-         );
+                                       }
+                );
 
     }
 
     public void removeAllValue(View v) {
         mFirebaseDatabase.getReference("dead/").removeValue();
     }
-    public void sendDevice(View v){
+
+    public void sendDevice(View v) {
         thisDeviceNumber = 1;
         sendbutton.setText("설정완료");
     }

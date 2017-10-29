@@ -21,6 +21,8 @@ public class ScatterPlot {
     private ArrayList<Double> y_CurrentList;
     private ArrayList<Double> x_ReceivedList;
     private ArrayList<Double> y_ReceivedList;
+    //private ArrayList<Double> x_AverageList;
+    //private ArrayList<Double> y_AverageList;
 
     public ScatterPlot (String seriesName) {
         this.seriesName = seriesName;
@@ -28,6 +30,8 @@ public class ScatterPlot {
         y_CurrentList = new ArrayList<>();
         x_ReceivedList = new ArrayList<>();
         y_ReceivedList = new ArrayList<>();
+        //x_AverageList = new ArrayList<>();
+        //y_AverageList = new ArrayList<>();
     }
 
     public GraphicalView getGraphView(Context context) {
@@ -46,7 +50,7 @@ public class ScatterPlot {
         for (int i = 0; i < y_CurrentList.size(); i++)
             ySet[i] = y_CurrentList.get(i);
 
-        //받은 자표---------
+        //받은 좌표---------
         double[] x_ReceivedSet = new double[x_ReceivedList.size()];
         for (int i = 0; i < x_ReceivedList.size(); i++)
             x_ReceivedSet[i] = x_ReceivedList.get(i);
@@ -55,6 +59,27 @@ public class ScatterPlot {
         double[] y_ReceivedSet = new double[y_ReceivedList.size()];
         for (int i = 0; i < y_ReceivedList.size(); i++)
             y_ReceivedSet[i] = y_ReceivedList.get(i);
+        //-----------------
+
+
+        //평균 좌표---------
+
+        int sizeNum = 0;//개수 차이로 인덱스 오류 방지를 위해
+        if(x_ReceivedSet.length < xSet.length){
+            sizeNum = x_ReceivedSet.length;
+        }else{
+            sizeNum = xSet.length;
+        }
+
+        double[] x_AverageSet = new double[sizeNum];
+        for (int i = 0; i < sizeNum; i++){
+            x_AverageSet[i] = (x_ReceivedList.get(i)+x_CurrentList.get(i))/2.0;
+        }
+
+        //adding the y-axis data from an ArrayList to a standard array
+        double[] y_AverageSet = new double[sizeNum];
+        for (int i = 0; i < sizeNum; i++)
+            y_AverageSet[i] = (y_ReceivedList.get(i)+y_CurrentList.get(i))/2.0;
         //-----------------
 
         //creating a new sequence using the x-axis and y-axis data
@@ -75,7 +100,7 @@ public class ScatterPlot {
         myMultiRenderer = new XYMultipleSeriesRenderer();
         myMultiRenderer.addSeriesRenderer(myRenderer);
 
-
+        //받아온 x,y 좌표 그려주는 작업
         XYSeriesRenderer received_myRenderer = new XYSeriesRenderer();
         received_myRenderer.setFillPoints(true);
         received_myRenderer.setPointStyle(PointStyle.CIRCLE);
@@ -86,7 +111,21 @@ public class ScatterPlot {
             received_mySeries.add(x_ReceivedSet[i], y_ReceivedSet[i]);
         myMultiSeries.addSeries(received_mySeries);
         myMultiRenderer.addSeriesRenderer(received_myRenderer);
+        //--------
 
+
+        //평균 x,y 좌표 그려주는 작업
+        XYSeriesRenderer average_myRenderer = new XYSeriesRenderer();
+        average_myRenderer.setFillPoints(true);
+        average_myRenderer.setPointStyle(PointStyle.CIRCLE);
+        average_myRenderer.setColor(Color.BLUE);
+
+        XYSeries average_mySeries = new XYSeries(seriesName);
+        for (int i = 0; i < x_AverageSet.length; i++)
+            average_mySeries.add(x_AverageSet[i], y_AverageSet[i]);
+        myMultiSeries.addSeries(average_mySeries);
+        myMultiRenderer.addSeriesRenderer(average_myRenderer);
+        //---------
 
         //setting text graph element sizes
         myMultiRenderer.setPointSize(5); //size of scatter plot points
