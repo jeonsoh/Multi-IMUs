@@ -21,12 +21,12 @@ public final class ExtraFunctions {
                                                      {0,0,1}};
 
     //calculate x coordinate point given radius and angle
-    public static float getXFromPolar(double radius, double angle) {
+    public static float getXFromPolar(double radius, double angle) {//y좌표
         return (float)(radius * Math.cos(angle));
     }
 
     //calculate y coordinate point given radius and angle
-    public static float getYFromPolar(double radius, double angle) {
+    public static float getYFromPolar(double radius, double angle) {//x좌표
         return (float)(radius * Math.sin(angle));
     }
 

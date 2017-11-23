@@ -9,6 +9,20 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-a8483996332a4632af947cbb322f9a2949c0571e.jar" />
     </item>
     <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-61893e4d16468e66d12c1ca3eb39dd00124b5a35.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/src/libs/EJML-core-0.26.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4d7c1d7b16b80875d7fba8d72b2e24eece176124">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/EJML-core-0.26-0bb8957c6ba633d4d6500f712655785be255f315.jar" />
+    </item>
+    <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.2.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -30,6 +44,13 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-2173316ce0591754faed0581790cc839f225382c.jar" />
     </item>
     <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b6af36bacf1d812cd3dc45f9dcab9ea471ed91">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-fd7398785572b3e1590899d1ba738fdd00ed2a29.jar" />
+    </item>
+    <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/11.0.4/classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -44,6 +65,13 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-5e638a453490c90ee1f31390190af80e0d426ca5.jar" />
     </item>
     <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="f5ff5e3811e8c9485fd27f9052ae4d4d23a22d9d">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-0c5d3df86fb4fe292cb17c34976ea885354f9d5e.jar" />
+    </item>
+    <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.2.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -51,11 +79,39 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-01d7ea7f2081ae8f53a3d9424906f6f2a493b117.jar" />
     </item>
     <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-6b62ae035aa701aff1d2bd707fd1f002aacbd45d.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-d902bc5cc0708737dab402a2e7a277731ad52237.jar" />
+    </item>
+    <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/11.0.4/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="0bffdc0bd4f7ca0e27c5bfeef39569f8da00aa26">
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-c41ab05078cfc6fd5ed954e49dbebdd7f60e4ba9.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="70ffe00aaf049893f59d1dad57bd82992faa38ef">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-bbc06b22d38ab5d2fa525bb736e0d1bbe3f93e59.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0bffdc0bd4f7ca0e27c5bfeef39569f8da00aa26">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-61894eb30e8cdeb81cdabe9d9d4de3a5563e1fb7.jar" />
     </item>
     <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/11.0.4/classes.jar"
@@ -72,6 +128,13 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-c534a4ac98da336605ea8526801b26ab3baa4abc.jar" />
     </item>
     <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2430e711762a749feb00b3d64858ca4768251b9d">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-3d41a0754cb04090883ede8b09afa15efa36eee9.jar" />
+    </item>
+    <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.2.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -84,6 +147,13 @@
         revision="21.1.2"
         sha1="7a2442910a31052812e3ac2a5c6c6440879518e2">
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-72bdaefc5e6d7ca52f9ce29ba05d0078fd0f0c43.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e1625e48a836779b5fa141d22e5d05563aaccc9a">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-7863a44193da2e38f15d6b1e779a794e8a3f71d8.jar" />
     </item>
     <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/11.0.4/classes.jar"
@@ -100,11 +170,39 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-e15733ee4ad9425c172506c1f5c3bd54fb3f62b4.jar" />
     </item>
     <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-801f34772c87e599111413c35a1920a53c8f4297.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-33c9c5f37f3439d4d6ad57686993fa9ee897152f.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/src/libs/achartengine-1.1.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9932e3fb9fbe54e80873e77f72a99f79e33b3250">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/achartengine-1.1.0-c8ba86255eccd53d1cc98ed514d5e2a432d87164.jar" />
+    </item>
+    <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-1a293c834849efd96b4cc45fb86d98cce0c90cb5.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-9830cd198736a46e394b9695cb3d1d2fad57b12f.jar" />
     </item>
     <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.2.0/classes.jar"
@@ -114,6 +212,20 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-bc24aed415b32c352ec341538031d2560d0054b5.jar" />
     </item>
     <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ed87ccdcb70c17d71ba4e6e4ac16afa62d3c49fb">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-e560b1d5f43241552994a6bdd96c0a6bfc224c38.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1b12397bc9f342b29d9e9108978828f99a6da579">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-4c7d5e0c9b09fece75288ccc59f5e65909956dce.jar" />
+    </item>
+    <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/11.0.4/classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -121,11 +233,32 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-0a7a933592f1f0b08b7fb0460bc7484a977a80af.jar" />
     </item>
     <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="43e9789bd3240271265ab30ce1be9f224843f5a8">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-379ef666b28b5bd4f8a56ab01da3eacd75791cda.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e5b429c146094a612134910688d169ec08deeefb">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-5898a4d9b073df5c7c66231daf84c2182baf1129.jar" />
+    </item>
+    <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database-connection/11.0.4/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="1b12397bc9f342b29d9e9108978828f99a6da579">
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-4f38b71cc9a635ff95049024dae7a11ae3264e27.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/Multi-IMUs/zBarScannerLibrary/unspecified/libs/zbar.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7bbdf7ba57a8a157c0cad51e455609c70887812e">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/zbar-70cc9a8b575bcaa1766989c8fef50742f61e8946.jar" />
     </item>
     <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/src/libs/achartengine-1.1.0.jar"
@@ -149,6 +282,13 @@
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-7e248645e3a13db64ef80afabd23a7db6db940e5.jar" />
     </item>
     <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/Multi-IMUs/zBarScannerLibrary/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7d352d504f77af73639e68b476e19e1509acbffb">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-0de61d2050d12bf38e904c4aede662707d40bca5.jar" />
+    </item>
+    <item
         jar="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/11.0.4/classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -161,6 +301,27 @@
         revision="21.1.2"
         sha1="364364bf77b4a71afc5930fc3ae57b3f0eea637c">
         <dex dex="/Users/Taek/Desktop/project/DeadReckoning-master/app/build/intermediates/pre-dexed/debug/classes-0493408d7294b79f88f63b5d2ccda68db9c904b9.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="364364bf77b4a71afc5930fc3ae57b3f0eea637c">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-8e4c3370ac4aa8933e7514513692c8db7ceb9261.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-2054fd7f3464a1ae9e308da714103d8fc85d72f5.jar" />
+    </item>
+    <item
+        jar="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/exploded-aar/com.google.firebase/firebase-database/11.0.4/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7c24e2e9773fb498e390ce973db382c3ddcf748e">
+        <dex dex="/Users/Taek/Desktop/project/Multi-IMUs/app/build/intermediates/pre-dexed/debug/classes-0f28774b9d88eac2b108db621f5b154658dc628d.jar" />
     </item>
     <item
         jar="/Users/Taek/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.2.0/support-annotations-25.2.0.jar"

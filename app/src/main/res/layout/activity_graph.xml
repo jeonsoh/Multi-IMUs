@@ -14,8 +14,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:onClick="removeAllValue"
-        android:text="resetData"
-        android:textSize="15sp" />
+        android:text="RESET"
+        android:textSize="15sp"
+        android:layout_alignEnd="@+id/buttonGraphStart" />
 
     <Button
         android:layout_width="100dp"
@@ -37,15 +38,6 @@
         android:layout_alignParentEnd="true"
         android:textSize="15sp" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="330dp"
-        android:layout_height="375dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/linearLayoutGraph"/>
-
     <Button
         android:layout_width="100dp"
         android:layout_height="75dp"
@@ -54,17 +46,44 @@
         android:textSize="15sp"
         android:layout_marginLeft="86.5dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
     <Button
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:text="초기값받기"
+        android:id="@+id/sendInitialValue_Btn"
+        android:textSize="15sp"
+        android:layout_marginLeft="86.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:text="sendDeivce"
-        android:textSize="15sp"
-        android:layout_above="@+id/buttonGraphStop"
-        android:layout_toEndOf="@+id/resetDataBtn"
-        android:layout_marginStart="11dp"
+        android:gravity="center"
+        android:text="ReceiveMD"
+        android:textSize="10sp"
+        android:id="@+id/status"
+        android:layout_alignTop="@+id/deviceCheck"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/deviceCheck" />
+
+    <Button
+        android:text="ChangeSetting"
         android:onClick="sendDevice"
-        android:id="@+id/deviceCheck" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/deviceCheck"
+        android:layout_above="@+id/buttonGraphStart"
+        android:layout_toEndOf="@+id/resetDataBtn" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="330dp"
+        android:layout_height="375dp"
+        android:id="@+id/linearLayoutGraph"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
