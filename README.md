@@ -1,5 +1,5 @@
-# 다수의 관성 센서 협력을 통한 보행자 추측 항법
-# IMUs Collaboration for Pedestrian Dead Reckoning
+## 다수의 관성 센서 협력을 통한 보행자 추측 항법
+## IMUs Collaboration for Pedestrian Dead Reckoning
 
 ### 손준택 , 전소향, 권진세, 김형신
 ### 충남대학교 컴퓨터공학과
@@ -12,7 +12,7 @@
 * * *
 
 
-##시스템 시나리오 
+## 시스템 시나리오 
 
 1. 파이어베이스 연동을 위해 구글 로그인
 
@@ -23,19 +23,19 @@
 4. START 버튼 클릭
 
 
-Device 1)
+- Device 1)
 
 1. CHANGESETTING버튼을 통해 송신 디바이스로 설정
 
 2. 초기값 전송 클릭(초기 방위값 전송)
 
 
-Device 2)
+- Device 2)
 
 1. 초기값 받기 클릭(초기 방위값 받음)
 
 
-Device 1,2 공통)
+- Device 1,2 공통)
 
 1. 휴대폰을 손바닥위에 올려놓고 걸음 시작
 
