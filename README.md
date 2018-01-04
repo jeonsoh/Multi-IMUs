@@ -2,7 +2,9 @@
 ### IMUs Collaboration for Pedestrian Dead Reckoning
 
 손준택 , 전소향, 권진세, 김형신
+
 충남대학교 컴퓨터공학과
+
 {thswnsxor123, jeonsohh}@naver.co.kr, {kwonse, hyungshin}@cnu.ac.kr
 
 
