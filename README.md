@@ -48,4 +48,8 @@
 1. 휴대폰을 손바닥위에 올려놓고 걸음 시작
 
 
+* * *
+
+참고 사이트 
+[https://github.com/nisargnp/DeadReckoning]
 
