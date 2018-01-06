@@ -25,7 +25,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import nisargpatel.deadreckoning.R;
 
-public class AuthActivity extends Activity implements GoogleApiClient.OnConnectionFailedListener {
+public class AuthActivity extends Activity implements GoogleApiClient.OnConnectionFailedListener {//파이어베이스 연동을 위한 구글계정 로그인 액비티비티
     private SignInButton mSignButton;
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mFirebaseAuth;
@@ -38,7 +38,7 @@ public class AuthActivity extends Activity implements GoogleApiClient.OnConnecti
         mSignButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {//해당 버튼 클릭시 구글 로그인창 연동
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, 100);
             }
@@ -59,17 +59,17 @@ public class AuthActivity extends Activity implements GoogleApiClient.OnConnecti
 
     }
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {//구글로 연동된 페이지로부터 받은 응답코드로 판단
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == 100) {
+        if (requestCode == 100) {//100 이라는 신호를 받는다면
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
+            if (result.isSuccess()) {//로그인 성공시
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-            } else {
+            } else {//로그인 실패시
                 Toast.makeText(AuthActivity.this," 구글로그인 실패입니다. ", Toast.LENGTH_SHORT).show();
                 // Google Sign In failed, update UI appropriately
                 // ...
@@ -81,7 +81,7 @@ public class AuthActivity extends Activity implements GoogleApiClient.OnConnecti
 
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {//로그인 성공시 호출되는 메소드
         //Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         // [START_EXCLUDE silent]
         //showProgressDialog();
@@ -91,7 +91,7 @@ public class AuthActivity extends Activity implements GoogleApiClient.OnConnecti
         Task<AuthResult> authResultTask = mFirebaseAuth.signInWithCredential(credential);
         authResultTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
-            public void onSuccess(AuthResult authResult) {
+            public void onSuccess(AuthResult authResult) {//유저 자격 확인이 성공되었다면, UserActivity로 이동
                 FirebaseUser firebaseUser = authResult.getUser();
                 //Toast.makeText(AuthActivity.this,"Email: "+firebaseUser.getEmail(),Toast.LENGTH_SHORT).show();
 
@@ -103,7 +103,7 @@ public class AuthActivity extends Activity implements GoogleApiClient.OnConnecti
         authResultTask.addOnFailureListener(new OnFailureListener() {
 
             @Override
-            public void onFailure(@NonNull Exception e) {
+            public void onFailure(@NonNull Exception e) {//유저 자격 확인이 실패되었다면,
                 Toast.makeText(AuthActivity.this," firebase 허용 안됩니다. ", Toast.LENGTH_SHORT).show();
             }
         });

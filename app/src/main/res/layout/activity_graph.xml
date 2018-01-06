@@ -69,15 +69,6 @@
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/deviceCheck" />
 
-    <Button
-        android:text="ChangeSetting"
-        android:onClick="sendDevice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/deviceCheck"
-        android:layout_above="@+id/buttonGraphStart"
-        android:layout_toEndOf="@+id/resetDataBtn" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="330dp"
@@ -85,5 +76,14 @@
         android:id="@+id/linearLayoutGraph"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="ChangeSetting"
+        android:onClick="sendDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/deviceCheck"
+        android:layout_alignTop="@+id/resetDataBtn"
+        android:layout_toEndOf="@+id/resetDataBtn" />
 
 </RelativeLayout>

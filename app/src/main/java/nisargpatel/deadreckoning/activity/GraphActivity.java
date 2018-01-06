@@ -41,13 +41,13 @@ import nisargpatel.deadreckoning.orientation.MagneticFieldOrientation;
 import nisargpatel.deadreckoning.stepcounting.DynamicStepCounter;
 
 public class GraphActivity extends Activity implements SensorEventListener, LocationListener {
-//
+//FireBase 에 저장하기 위한 경로와 가틍ㄴ 부분은 본인에게 맞게 바꾸어 줄 필요가 있을 수도 있음. PDR알고리즘 구현을 위한 수식은 다른 사람의 코드를 인용한 코드이므로 어느정도 해석과 이해가 필요하다.
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private FirebaseDatabase mFirebaseDatabase;
-    private int thisDeviceNumber = 0;  //0번은 두개를 한화면에 표시하는 디바이스
-    //private int thisDeviceNumber = 1;//1번은 송신만 하는 디바이스.
+    private int thisDeviceNumber = 0;  //0번은 수신용 디바이스
+    //private int thisDeviceNumber = 1;//1번은 송신용 디바이스.
 
     //tt
     private static final long GPS_SECONDS_PER_WEEK = 511200L;
@@ -226,7 +226,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
         }
 
         //setting up buttons
-        buttonStart.setOnClickListener(new View.OnClickListener() {
+        buttonStart.setOnClickListener(new View.OnClickListener() {// START버튼 클릭시 동작하는 메소드들
             @Override
             public void onClick(View v) {
 
@@ -271,7 +271,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
             }
         });
 
-        buttonStop.setOnClickListener(new View.OnClickListener() {
+        buttonStop.setOnClickListener(new View.OnClickListener() {//STOP버튼 누를시 동작하는 메소드
             @Override
             public void onClick(View v) {
 
@@ -284,7 +284,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
             }
         });
 
-        buttonAddPoint.setOnClickListener(new View.OnClickListener() {
+        buttonAddPoint.setOnClickListener(new View.OnClickListener() {// UI상에 존재 하지 않음. 수동으로 좌표 찍음. 본 개발자가 필요없다고 판단하여 삭제
             @Override
             public void onClick(View v) {
 
@@ -330,14 +330,17 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
             }
         });
 
-        sendInitialBtn.setOnClickListener(new View.OnClickListener() {//start 누르고 전송해야됨.
-
+        sendInitialBtn.setOnClickListener(new View.OnClickListener() {// START버튼 클릭 후 다른기기에 대해 초기센서값 전송을 위한 버튼. 두 디바이스의 초기 방향값이 일치되어있지 않기 때문에 일치시키기 위한 작업.
+                                                                        //이 때 두 디바이스 중에 하나는 송신 디바이스, 하나는 수신 디바이스로 설정되어 있어야함. (CHANGESETTING 버튼을 통해 번경)
+                                                                        // 송신디바이스가 초기값 보내기버튼을 통해 초기값 전송. 수신 디바이스의 초기값 받기 버튼을 통해 초기값 갱신.
+                                                                        //해당 버튼의 이름은 1번 디바이스인 송신 디바이스의 경우엔 "초기값보내기" , 0번 디바이스인 수신 디바이스의 경우엔 "초기값 받기" 이다.
             @Override
             public void onClick(View v) {
                 setting = true;
-                if (thisDeviceNumber == 0) {
+                if (thisDeviceNumber == 1) {//송신 디바이스는 해당 메소드 실행
                     final float compHeadingtemp = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
-                    mFirebaseDatabase.getReference("dead/")
+                    mFirebaseDatabase.getReference("dead/") // 송신 디바이스가 파이어베이스에 초기값 전송하는 부분,
+                                                            // compHeading은 현재 계산된 방향 값을 나타내고 intialHeading은 제일 초기에 자기장센서로만 얻어진 방향이다.
                             .child("initialcomp")
                             .setValue(compHeadingtemp + "")
                             .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
@@ -345,26 +348,26 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                                 public void onSuccess(Void aVoid) {
                                     compHeading = compHeadingtemp;
                                     //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
-                                    Toast.makeText(GraphActivity.this, "받기완료", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(GraphActivity.this, "보내기완료", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                    mFirebaseDatabase.getReference("dead/")
+                    mFirebaseDatabase.getReference("dead/")// 송신 디바이스가 파이어베이스에 초기값 전송하는 부분
                             .child("initialvalue")
                             .setValue(initialHeading + "")
                             .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     //Snackbar.make(memoEditText, " 메모 저장됨", Snackbar.LENGTH_SHORT).show();
-                                    Toast.makeText(GraphActivity.this, "받기완료", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(GraphActivity.this, "보내기완료", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                } else {
-                    mFirebaseDatabase.getReference("dead/")
+                } else {//수신 디바이스는 해당 메소드 실행
+                    mFirebaseDatabase.getReference("dead/")//수신 디바이스는 초기값이 전송되면 다음과 같이 초기값이 갱신되어짐.
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     compHeading = Float.parseFloat((String) dataSnapshot.child("initialcomp").getValue());
-                                    Toast.makeText(GraphActivity.this, "보내기완료" + compHeading, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(GraphActivity.this, "받기완료" + compHeading, Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -372,12 +375,12 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
                                 }
                             });
-                    mFirebaseDatabase.getReference("dead/")
+                    mFirebaseDatabase.getReference("dead/")//수신 디바이스는 초기값이 전송되면 다음과 같이 초기값이 갱신되어짐.
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     initialHeading = Float.parseFloat((String) dataSnapshot.child("initialvalue").getValue());
-                                    Toast.makeText(GraphActivity.this, "보내기완료" + compHeading, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(GraphActivity.this, "받기완료" + compHeading, Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -389,7 +392,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
             }
         });
 
-        if (thisDeviceNumber == 0) {
+        if (thisDeviceNumber == 0) {// 수신 디바이스인 0번 디바이스는 두 개의 디바이스의 좌표값을 출력함. 실시간으로 좌표값 업데이트를 위해 파이어베이스의 데이터를 불러오는 메소드 호출.
             displayXY();
             //displayAverage();
         }
@@ -523,7 +526,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                 Log.e("gyro_values", Arrays.toString(event.values));
                 gyro_values = Arrays.toString(event.values);
 
-            } else if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+            } else if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {//걸음이 검출되었다면
 
                 float norm = ExtraFunctions.calcNorm(
                         event.values[0] +
@@ -538,7 +541,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     if (stepCount == 0 && setting == true) {
                         stepCount++;
                     } else {
-                        compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);
+                        compHeading = ExtraFunctions.calcCompHeading(magHeading, gyroHeading);// 새로운 방향값을 계산.
                         stepCount++;
 
                         //saving linear acceleration data
@@ -556,7 +559,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         Log.d("comp_heading", "" + compHeading);
                         comp_heading = compHeading + "";
 
-                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid())
+                        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid()) // 해당 방향값을 파이어베이스에 지속적으로 쌓아놓음. 추후 분석을 위한 행위.
                                 .child("comp")
                                 .setValue(comp_heading)
                                 .addOnSuccessListener(GraphActivity.this, new OnSuccessListener<Void>() {
@@ -577,8 +580,8 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                         oPointY += ExtraFunctions.getYFromPolar(strideLength, compHeading);
 
                         //rotating points by 90 degrees, so north is up
-                        float rPointX = -oPointY;
-                        float rPointY = oPointX;
+                        float rPointX = -oPointY; // 상대적인 x 위치 값 계산.
+                        float rPointY = oPointX;// 상대적인 y 위치 값 계산.
                     /*if(rPointX > 300){
                         rPointX = 300;
                     }else if(rPointX < -300){
@@ -589,7 +592,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                     }else if(rPointY < -300){
                         rPointY = -300;
                     }*/
-                        scatterPlot.addPoint(rPointX, rPointY);
+                        scatterPlot.addPoint(rPointX, rPointY); // 화면에 표시를 위해 메소드를 통해 구한 좌표값을 추가. (걸음이 검출될 때마다 실시간으로 찍히게 됨)
 
                         Log.e("rX, rY---------------", rPointX + "," + rPointY);
 
@@ -607,7 +610,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
                     scatterPlot.add_ReceivedPoint(AVR_PointX, AVR_PointY);
 */
-                        if (thisDeviceNumber == 0) {
+                        if (thisDeviceNumber == 0) {// 0 번 디아비스의 좌표값 및 센서값들을 파이어베이스에 전송하여 데이터 쌓음, 추후 분석을 위한 데이터 축적 행동.
                             XYItem xyItem = new XYItem();
                             xyItem.setX(rPointX);
                             xyItem.setY(rPointY);
@@ -629,7 +632,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                                         }
                                     });
                         }
-                        if (thisDeviceNumber == 1) {
+                        if (thisDeviceNumber == 1) {// 1 번 디아비스의 좌표값 및 센서값들을 파이어베이스에 전송하여 데이터 쌓음, 추후 분석을 위한 데이터 축적 행동.
                             XYItem xyItem = new XYItem();
                             xyItem.setX(rPointX);
                             xyItem.setY(rPointY);
@@ -684,7 +687,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
                 }
 
-            } else if (event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
+            } else if (event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {// 걸음이 검출되었다면, 안드로이드에는 여러가지 센서 메소드가 존재. 걸음 검출에도 여러가지 방법이 존재.
 
                 boolean stepFound = (event.values[0] == 1);
                 Log.e("Linear_values", Arrays.toString(event.values));
@@ -753,7 +756,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
                     scatterPlot.add_ReceivedPoint(AVR_PointX, AVR_PointY);
 */
-                        if (thisDeviceNumber == 0) {
+                        if (thisDeviceNumber == 0) {// 0 번 디아비스의 좌표값 및 센서값들을 파이어베이스에 전송하여 데이터 쌓음, 추후 분석을 위한 데이터 축적 행동.
                             XYItem xyItem = new XYItem();
                             xyItem.setX(rPointX);
                             xyItem.setY(rPointY);
@@ -775,7 +778,7 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
                                         }
                                     });
                         }
-                        if (thisDeviceNumber == 1) {
+                        if (thisDeviceNumber == 1) {// 1 번 디아비스의 좌표값 및 센서값들을 파이어베이스에 전송하여 데이터 쌓음, 추후 분석을 위한 데이터 축적 행동.
                             XYItem xyItem = new XYItem();
                             xyItem.setX(rPointX);
                             xyItem.setY(rPointY);
@@ -854,15 +857,16 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
         }
     }
 
-    public void displayXY() {
-        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid() + "/data1")
+    public void displayXY() {// 수신디바이스의 경우에만 호출되는 메소드이다. 송신 디바이스가 보낸 x,y 좌표를 화면에 출력해줌,
+                            // 또한 ScatterPlot 클래스의 조작을 통해 두 다바이스의 평균값을 계산하여 동시 출력
+        mFirebaseDatabase.getReference("dead/" + mFirebaseUser.getUid() + "/data2")// data2 경로에 저장되어진 값은 송신 디바이스가 축적해놓은 데이터에 해당됨. 따라서 그 경로에서 x,y좌표값만 따오는 작업을 위한 행동.
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {//데이터 추가된 경우
                         XYItem xyitem = dataSnapshot.getValue(XYItem.class);
-                        scatterPlot.add_ReceivedPoint(xyitem.getX(), xyitem.getY());
-                        mLinearLayout.removeAllViews();
-                        mLinearLayout.addView(scatterPlot.getGraphView(getApplicationContext()));
+                        scatterPlot.add_ReceivedPoint(xyitem.getX(), xyitem.getY());// Scatter에 송신 디바이스로부터 받은 x,y좌표 추가
+                        mLinearLayout.removeAllViews();// GraphActivity상단에 표시되는 화면을 비워두고, 새로 갱신된 Scatter로 바꾸어줌.
+                        mLinearLayout.addView(scatterPlot.getGraphView(getApplicationContext()));// scatterPlot의 getGraphView 함수 조작을 통해 송신디바이스의 x,y값 그리고 두 디바이스의 평균값까지 출력.
                         /*Memo memo = dataSnapshot.getValue(Memo.class);
                         memo.setKey(dataSnapshot.getKey());
                         mMemoAdapter.add(memo);
@@ -952,11 +956,11 @@ public class GraphActivity extends Activity implements SensorEventListener, Loca
 
     }
 
-    public void removeAllValue(View v) {
+    public void removeAllValue(View v) {//모든 데이터를 지우는 작업.
         mFirebaseDatabase.getReference("dead/"+mFirebaseUser.getUid()).removeValue();
     }
 
-    public void sendDevice(View v) {
+    public void sendDevice(View v) {//CHANGESETTING버튼을 눌렀을 때, 송신디바이스 or 수신디바이스를 설정.
         if(thisDeviceNumber == 0) {
             thisDeviceNumber = 1;
             statusText.setText("SendMD");

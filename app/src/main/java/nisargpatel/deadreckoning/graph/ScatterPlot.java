@@ -50,7 +50,7 @@ public class ScatterPlot {
         for (int i = 0; i < y_CurrentList.size(); i++)
             ySet[i] = y_CurrentList.get(i);
 
-        //받은 좌표---------
+        //송신디바이스로 부터 받은 좌표---------
         double[] x_ReceivedSet = new double[x_ReceivedList.size()];
         for (int i = 0; i < x_ReceivedList.size(); i++)
             x_ReceivedSet[i] = x_ReceivedList.get(i);
@@ -62,7 +62,7 @@ public class ScatterPlot {
         //-----------------
 
 
-        //평균 좌표---------
+        //두 디바이스의 평균 좌표---------
 
         int sizeNum = 0;//개수 차이로 인덱스 오류 방지를 위해
         if(x_ReceivedSet.length < xSet.length){
